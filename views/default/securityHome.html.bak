@@ -1,0 +1,19 @@
+{{extend 'layout.html'}}
+
+<table>
+  <tr>
+    <td>{{=form}}</td>
+    <td>{{=form1}}</td>
+</table>
+
+ <div style="display : none;" id="temp"></div>
+
+<script>
+jQuery(document).ready(function(){
+        jQuery('#courierDetails_Name').focusout(function(){ 
+        var name = jQuery('#courierDetails_Name').val();
+        var hostelName = jQuery('#courierDetails_Hostel_Name').val();
+        var roomNo = jQuery('#courierDetails_Room_No').val();
+        ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
+   });
+</script>

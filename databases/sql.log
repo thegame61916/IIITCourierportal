@@ -1,0 +1,90 @@
+timestamp: 2015-11-13T22:24:15.668731
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2015-11-13T22:24:15.783778
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-11-13T22:24:15.885352
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-11-13T22:24:15.998226
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group(id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2015-11-13T22:24:16.179344
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-11-13T22:24:16.292800
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user(id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2015-11-13T23:36:01.231103
+CREATE TABLE courierDetails(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content CHAR(512)
+);
+success!
+timestamp: 2015-11-13T23:54:59.604725
+ALTER TABLE courierDetails ADD received TEXT;
+timestamp: 2015-11-13T23:54:59.816128
+ALTER TABLE courierDetails ADD name TEXT;
+timestamp: 2015-11-13T23:54:59.930480
+ALTER TABLE courierDetails ADD room_no TEXT;
+timestamp: 2015-11-13T23:55:00.043051
+ALTER TABLE courierDetails ADD package_tracking_id TEXT;
+timestamp: 2015-11-13T23:55:00.178132
+ALTER TABLE courierDetails ADD contact_no TEXT;
+timestamp: 2015-11-13T23:55:00.290726
+ALTER TABLE courierDetails ADD company_name TEXT;
+timestamp: 2015-11-13T23:55:00.437677
+ALTER TABLE courierDetails ADD hostel_name TEXT;
+timestamp: 2015-11-13T23:55:00.550614
+ALTER TABLE courierDetails ADD email TEXT;
+timestamp: 2015-11-13T23:55:00.662977
+ALTER TABLE courierDetails ADD size TEXT;
+timestamp: 2015-11-14T00:37:31.250276
+ALTER TABLE courierDetails ADD date_received TIMESTAMP;
+timestamp: 2015-11-15T03:10:17.428683
+CREATE TABLE studentHostelDetails(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name CHAR(512),
+    Hostel_Name CHAR(512),
+    Room_No INTEGER,
+    Email CHAR(512)
+);
+success!
