@@ -1,12 +1,22 @@
 {{extend 'layout.html'}}
 
-<table>
+<table id="homeTable">
   <tr>
-    <td>{{=form}}</td>
-    <td>{{=form1}}</td>
+    <td width="40%">
+        <h1 class="h1InPage"> 
+            New package details 
+        </h1>
+        {{=form}}
+    </td>
+    <td width="20%">
+    </td>
+    <td>
+        <h1 class="h1InPage"> 
+            Search packages 
+        </h1>
+        {{=form1}}
+    </td>
 </table>
-
- <div style="display : none;" id="temp"></div>
 
 <script>
 jQuery(document).ready(function(){

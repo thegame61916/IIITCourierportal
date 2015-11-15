@@ -1,19 +1,34 @@
 {{extend 'layout.html'}}
 
-<table>
+<table id="homeTable">
   <tr>
-    <td>{{=form}}</td>
-    <td>{{=form1}}</td>
+    <td width="40%">
+        <h1 class="h1InPage"> 
+            New package details 
+        </h1>
+        {{=form}}
+    </td>
+    <td width="20%">
+        <div id="sidebar">
+        </div>
+    </td>
+    <td>
+        <h1 class="h1InPage"> 
+            Search packages 
+        </h1>
+        {{=form1}}
+    </td>
 </table>
-
- <div style="display : none;" id="temp"></div>
 
 <script>
 jQuery(document).ready(function(){
         jQuery('#courierDetails_Name').focusout(function(){ 
-        var name = jQuery('#courierDetails_Name').val();
-        var hostelName = jQuery('#courierDetails_Hostel_Name').val();
-        var roomNo = jQuery('#courierDetails_Room_No').val();
+        ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
+        
+        jQuery('#courierDetails_Room_No').focusout(function(){ 
+        ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
+        
+        jQuery('#courierDetails_Hostel_Name').focusout(function(){ 
         ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
    });
 </script>

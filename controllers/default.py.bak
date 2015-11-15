@@ -57,13 +57,13 @@ def searchPage():
         queries.append(db.courierDetails.Received == received)
     query = reduce(lambda a,b:(a&b),queries)    
        
-    rows=SQLFORM.grid(query = query);
+    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
     return {'rows':rows}
     
 @auth.requires_membership('student')
 def studentHome():
-    query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'No')
-    rows=SQLFORM.grid(query = query);
+    query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'NO')
+    rows=SQLFORM.grid(query = querysearchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
     return {'rows':rows}
 
 def getEmailFromHostelDB():

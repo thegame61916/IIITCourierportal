@@ -2,7 +2,7 @@
 <h2>{{=T( request.args(0).replace('_',' ').capitalize() )}}</h2>
 <div id="web2py_user_form">
   {{=form}}
-  {{if request.args(0)=='login':}}
+  <!--{{if request.args(0)=='login':}}
   {{if not 'register' in auth.settings.actions_disabled:}}
   <br/>
   <a href="{{=URL(args='register')}}">{{=T('Register')}}</a>
@@ -11,9 +11,8 @@
   <br/>
   <a href="{{=URL(args='request_reset_password')}}">{{=T('Lost Password')}}</a>
   {{pass}}
-  {{pass}}
+  {{pass}} -->
 </div>
 <script language="javascript"><!--
       jQuery("#web2py_user_form input:visible:enabled:first").focus();
       //--></script>
-
