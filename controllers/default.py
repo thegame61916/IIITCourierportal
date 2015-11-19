@@ -11,72 +11,13 @@
 from gluon.tools import Crud
 crud = Crud(db)
 
+@auth.requires_login()
 def index():
-    redirect(URL('login'))
-
-@auth.requires_login()    
-def login():
-    if auth.has_membership(group_id='security'):
-        redirect(URL('securityHome'))
-    else:
-        redirect(URL('studentHome'))
-        
-@auth.requires_membership('security')
-def securityHome():
-    form1 = SQLFORM.factory(Field('Student_Name', 'string'),
-                            Field('Contact_No', 'integer'),
-                            Field('From','datetime'),
-                            Field('To','datetime'),
-                            Field('Received', requires=IS_IN_SET(['YES', 'NO']),default='NO')).process()
-    form = crud.create(db.courierDetails).process()    #SQLFORM(db.courierDetails).process()
-    if form1.accepted:
-         redirect(URL('searchPage', 
-             vars={'name':form1.vars.Student_Name, 
-             'contact':form1.vars.Contact_No, 
-             'from':form1.vars.From, 
-             'to':form1.vars.To, 
-             'received':form1.vars.Received}))
-    return locals()
-
-def searchPage():
-    name = request.vars['name']
-    contact = request.vars['contact']
-    From = request.vars['from']
-    To = request.vars['to']
-    received = request.vars['received']
-    queries = []
-    if name != '':
-        queries.append(db.courierDetails.Name == name)
-    if contact != None and contact != 'None':
-        queries.append(db.courierDetails.Contact_No == int(contact))
-    if From != 'None':
-        queries.append(db.courierDetails.Date_received >=From)
-    if To != 'None':
-        queries.append(db.courierDetails.Date_received <= To)
-    if received != 'None':
-        queries.append(db.courierDetails.Received == received)
-    query = reduce(lambda a,b:(a&b),queries)    
-       
-    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
-    return {'rows':rows}
+     if auth.has_membership(group_id='security'):
+        redirect(URL('securityHome', 'securityHome'))
+     else:
+        redirect(URL('studentHome', 'studentHome'))
     
-@auth.requires_membership('student')
-def studentHome():
-    query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'NO')
-    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
-    return {'rows':rows}
-
-def getEmailFromHostelDB():
-    import cgi
-    s = cgi.escape(str(request.vars))
-    query = (db.studentHostelDetails.Hostel_Name == request.vars['Hostel_Name']) & (db.studentHostelDetails.Name == request.vars['Name']) & (db.studentHostelDetails.Room_No == request.vars['Room_No'])
-    rows = db(query).select()
-    emailId = ''
-    for row in rows:
-        emailId = row.Email
-    t = 'mohit'
-    return "jQuery('#courierDetails_Email').val(%s);" % repr(str(emailId))
-
 def user():
     """
     exposes:
@@ -91,7 +32,7 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
-    return dict(form=auth())
+    return dict(form=auth.login())
 
 
 def download():

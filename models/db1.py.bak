@@ -7,8 +7,8 @@ db.define_table('courierDetails',
     Field('Contact_No', 'integer',requires=IS_INT_IN_RANGE(1111111111,9999999999)), 
     Field('Package_Tracking_ID', 'string',requires=IS_NOT_EMPTY()), 
     Field('Company_Name', 'string',requires=IS_NOT_EMPTY()), 
-    Field('Email', 'string',requires=IS_EMAIL(), writable=False), 
-    Field('Received',requires=IS_IN_SET(['YES', 'NO']),default='NO'), 
+    Field('Email', 'string',requires=IS_EMAIL()), 
+    Field('Received',requires=IS_IN_SET(['YES', 'NO']),default='NO', writable=False), 
     Field('Size', requires=IS_IN_SET(['SMALL', 'MEDIUM', 'LARGE']),default='SMALL'),
     Field('Date_received', 'datetime',readable=False,writable=False,default=request.now))
     

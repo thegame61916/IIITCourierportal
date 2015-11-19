@@ -1,0 +1,10 @@
+def getEmailFromHostelDB():
+    import cgi
+    s = cgi.escape(str(request.vars))
+    query = (db.studentHostelDetails.Hostel_Name == request.vars['Hostel_Name']) & (db.studentHostelDetails.Name == request.vars['Name']) & (db.studentHostelDetails.Room_No == request.vars['Room_No'])
+    rows = db(query).select()
+    emailId = ''
+    for row in rows:
+        emailId = row.Email
+    t = 'mohit'
+    return "jQuery('#courierDetails_Email').val(%s);" % repr(str(emailId))

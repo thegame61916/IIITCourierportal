@@ -1,0 +1,6 @@
+@auth.requires_login()    
+def login():
+    if auth.has_membership(group_id='security'):
+        redirect(URL('securityHome/securityHome'))
+    else:
+        redirect(URL('securityHome/studentHome'))

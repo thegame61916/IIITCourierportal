@@ -20,14 +20,14 @@
 
 <script>
 jQuery(document).ready(function(){
+        $('#courierDetails_Email').attr('readonly', true);
         jQuery('#courierDetails_Name').focusout(function(){ 
-        {{url = URL(, 'getEmailFromHostelDB')}}
         ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
         
         jQuery('#courierDetails_Room_No').focusout(function(){ 
-        ajax('getEmailFromHostelDB', 'getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
+        ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
         
         jQuery('#courierDetails_Hostel_Name').focusout(function(){ 
-        ajax('{{=url}}', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
+        ajax('getEmailFromHostelDB', ['Hostel_Name', 'Name', 'Room_No'], ':eval')});
    });
 </script>

@@ -251,6 +251,7 @@ img.right {
 }
 
 #studenthomeTable{
+	position:relative;
 	left:0;
 	margin:0px;
     width:1000;

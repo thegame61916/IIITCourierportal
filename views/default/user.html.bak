@@ -1,5 +1,5 @@
 {{extend 'layout.html'}}
-x
+
 <div id="web2py_user_form">
   {{=form}}
   <!--{{if request.args(0)=='login':}}

@@ -296,7 +296,6 @@ td {
 /* Footer */
 
 #footer {
-    position:fixed;
     width: 920px;
     height: 100px;
     margin: 0 auto;

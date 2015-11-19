@@ -1,0 +1,18 @@
+@auth.requires_membership('student')
+def studentHome():
+    query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'NO')
+    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
+    form = SQLFORM.factory(Field('Student_Name', 'string'),
+                            Field('Contact_No', 'integer'),
+                            Field('From','datetime'),
+                            Field('To','datetime'),
+                            Field('Received', requires=IS_IN_SET(['YES', 'NO']),default='NO')).process()
+    if form.accepted:
+         redirect(URL('searchPage', 'searchPage', 
+             vars={'name':form1.vars.Student_Name, 
+             'contact':form1.vars.Contact_No, 
+             'from':form1.vars.From, 
+             'to':form1.vars.To, 
+             'received':form1.vars.Received}))
+            
+    return {'rows':rows, 'form':form}

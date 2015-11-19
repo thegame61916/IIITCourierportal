@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+
+<table id="studenthomeTable">
+  <tr>
+    <td width="70%">
+        <h1 class='h1InPage'>Items not received yet</h1>
+        {{=rows}}
+    </td>
+    <td width="10%"></td>
+    <td>
+        <h1 class="h1InPage"> 
+            Search packages 
+        </h1>
+        {{=form}}
+    </td>
+</table>
+
+{{extend 'layout.html'}}
