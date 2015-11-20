@@ -1,0 +1,9 @@
+def sendAcceptanceMail(): 
+    sub = 'Courier from ' + request.vars['courierDetails_Company_Name'] + ' is received1'
+    msg = 'Hi ' + request.vars['courierDetails_Name'] + ', \n\nWe have received a courier for you from ' + request.vars['courierDetails_Company_Name'] + '. Please collect it from security.\n\nThanks. \nIIIT Security Staff.' 
+    mail.send(to=[request.vars['courierDetails_Email']],
+                subject=sub,
+                reply_to='iiitcourierportal@gmail.com',
+                message=msg)
+     raw_input("How old are you? ")
+    return request.vars['courierDetails_Email']

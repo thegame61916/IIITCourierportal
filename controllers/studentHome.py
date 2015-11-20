@@ -2,7 +2,7 @@
 def studentHome():
     query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'NO')
     rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
-    form = SQLFORM.factory(Field('Student_Name', 'string'),
+    form = SQLFORM.factory(Field('Student_Name', 'string', default=auth.user.first_name + ' ' + auth.user.last_name),
                             Field('Contact_No', 'integer'),
                             Field('From','datetime'),
                             Field('To','datetime'),

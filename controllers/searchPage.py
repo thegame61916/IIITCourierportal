@@ -15,7 +15,21 @@ def searchPage():
         queries.append(db.courierDetails.Date_received <= To)
     if received != 'None':
         queries.append(db.courierDetails.Received == received)
+    if auth.has_membership(group_id='student'):
+        queries.append(db.courierDetails.Email == auth.user.email)
     query = reduce(lambda a,b:(a&b),queries)    
-       
-    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
+    if auth.has_membership(group_id='student'):
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,editable=False,create=False,csv=False)
+    else:
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
+    
     return {'rows':rows}
+
+def sendAcceptanceMail(): 
+    sub = 'Courier has been collected by you [Tracking ID: ' + request.vars['Package_Tracking_ID'] + ']'
+    msg = 'Hi ' + request.vars['Name'] + ', \n\nThis is a notificaiton mail.\nCourier with mentioned Tracking ID from ' + request.vars['Company_Name'] + ' has been collected by you.\n\nThanks. \nIIIT Security Staff.' 
+    mail.send(to=[request.vars['Email']],
+                subject=sub,
+                reply_to='iiitcourierportal@gmail.com',
+                message=msg)
+    return ''

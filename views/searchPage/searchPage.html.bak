@@ -1,4 +1,18 @@
-
 {{extend 'layout.html'}}
-<h1>This is the searchPage/searchPage.html template</h1>
-{{=BEAUTIFY(response._vars)}}
+{{if 'edit' in request.args:}}
+<h1 class='h1InPage'>Edit record</h1>
+<script>
+$(document).ready(function(){
+    $("form").submit(function(){
+        if($('#courierDetails_Received').val() === "YES"){
+            alert("Seding")
+            ajax('{{=URL('searchPage', 'sendAcceptanceMail')}}', ['Name', 'Company_Name', 'Email', 'Package_Tracking_ID'], ':eval');
+        }
+    });
+});
+</script>
+{{else:}}
+<h1 class='h1InPage'>Records matched</h1>
+{{pass}}
+
+{{=rows}}

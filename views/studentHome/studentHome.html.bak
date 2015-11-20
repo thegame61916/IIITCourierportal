@@ -15,4 +15,8 @@
     </td>
 </table>
 
-{{extend 'layout.html'}}
+<script>
+jQuery(document).ready(function(){
+        
+   });
+</script>

@@ -15,15 +15,19 @@ def securityHome():
              'from':form1.vars.From, 
              'to':form1.vars.To, 
              'received':form1.vars.Received}))
+    if form.accepted:
+        sub = 'Courier from ' + form.vars.Company_Name + ' is received [Tracking ID: ' + form.vars.Package_Tracking_ID+']'
+        msg = 'Hi ' + form.vars.Name + ', \n\nWe have received a courier for you from ' + form.vars.Company_Name + '. Please collect it from security.\n\nThanks. \nIIIT Security Staff.' 
+        mail.send(to=[form.vars.Email],
+                  subject=sub,
+                  reply_to='iiitcourierportal@gmail.com',
+                  message=msg)
     return locals()
     
 def getEmailFromHostelDB():
-    import cgi
-    s = cgi.escape(str(request.vars))
     query = (db.studentHostelDetails.Hostel_Name == request.vars['Hostel_Name']) & (db.studentHostelDetails.Name == request.vars['Name']) & (db.studentHostelDetails.Room_No == request.vars['Room_No'])
     rows = db(query).select()
     emailId = ''
     for row in rows:
         emailId = row.Email
-    t = 'mohit'
     return "jQuery('#courierDetails_Email').val(%s);" % repr(str(emailId))

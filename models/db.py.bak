@@ -46,7 +46,8 @@ crud, service, plugins = Crud(db), Service(), PluginManager()
 ## create all tables needed by auth if not custom tables
 auth.define_tables()
 
-## configure email
+
+
 mail = auth.settings.mailer
 mail.settings.server = 'smtp.gmail.com:587'#'logging' if request.is_local else myconf.take('smtp.server')
 mail.settings.sender = 'iiitcourierportal@gmail.com'#myconf.take('smtp.sender')
