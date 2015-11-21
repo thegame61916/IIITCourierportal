@@ -1,6 +1,8 @@
 def feedback():
     if auth.has_membership(group_id='student'):
         query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'YES')
+        
+        
         rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False,links=[lambda row: A("Feedback",_href=URL("feedback","studentViewFeedback/"+str(row.id)))]);
         return {'form':rows}
 
@@ -9,7 +11,9 @@ def feedback():
         companyNamesR = db(db.courierDetails).select(db.courierDetails.Company_Name,distinct=True)
         for c in companyNamesR:
             companyNames.append(c.Company_Name)
+        db.feedbackDetails.Company_Name.writable = False
         form = SQLFORM.factory(Field('Company', requires=IS_IN_SET(companyNames),default=companyNames[0])).process()
+        db.feedbackDetails.Company_Name.writable = True
         if form.accepted:
                 redirect(URL('securityViewFeedback', vars={'Company_Name':form.vars.Company}))
         return {'form':form}
@@ -17,7 +21,7 @@ def feedback():
 def securityViewFeedback():
         Company_Name = request.vars.Company_Name
         query = (db.feedbackDetails.Company_Name == Company_Name )
-        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=True,editable=True);
         return {'rows':rows}
 
 def studentViewFeedback():
@@ -27,7 +31,17 @@ def studentViewFeedback():
     db.feedbackDetails.Name.default = str(rows[0].Name) 
     db.feedbackDetails.Contact_No.default = str(rows[0].Contact_No)
     db.feedbackDetails.Item_ID.default = str(rows[0].Package_Tracking_ID)
+    db.feedbackDetails.Company_Name.writable=False
+    db.feedbackDetails.Name.writable=False
+    db.feedbackDetails.Contact_No.writable=False
+    db.feedbackDetails.Item_ID.writable=False
+    db.feedbackDetails.Actions_Taken.writable=False
     form = SQLFORM(db.feedbackDetails).process()
+    db.feedbackDetails.Company_Name.writable=True
+    db.feedbackDetails.Name.writable=True
+    db.feedbackDetails.Contact_No.writable=True
+    db.feedbackDetails.Item_ID.writable=True
+    db.feedbackDetails.Actions_Taken.writable=True
     form.vars.Company_Name = str(rows[0].Company_Name)
     form.vars.Name = str(rows[0].Name)
     form.vars.Contact_No = str(rows[0].Contact_No)
