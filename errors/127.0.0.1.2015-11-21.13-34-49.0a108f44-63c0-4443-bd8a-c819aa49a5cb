@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.TypeError'> list indices must be integers, not str"
+p3
+sS'layer'
+p4
+S'/home/sonam/web2py/applications/IIITCourierportal/controllers/feedback.py'
+p5
+sS'code'
+p6
+S'def feedback():\n    if auth.has_membership(group_id=\'student\'):\n        query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == \'YES\')\n        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False,links=[lambda row: A("Feedback",_href=URL("feedback","studentViewFeedback/"+str(row.id)))]);\n        return {\'form\':rows}\n\n    else:\n        companyNames = db(db.courierDetails).select(db.courierDetails.Company_Name,distinct=True)\n        form = SQLFORM.factory(Field(\'Company\', requires=IS_IN_SET(companyNames[:][\'Company_Name\']),default=companyNames[0])).process()\n        if form.accepted:\n                redirect(URL(\'securityViewFeedback\', vars={\'Company_Name\':form.vars.Company_Name}))\n        return {\'form\':form}\n\ndef securityViewFeedback():\n        Company_Name = request.vars.Company_Name\n        query = (db.feedbackDetails.Company_Name == Company_Name )\n        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);\n        return {\'rows\':rows}\n\ndef studentViewFeedback():\n    data_id = request.args(0)\n    rows = db(db.courierDetails.id == data_id).select()\n    db.feedbackDetails.Company_Name.default = str(rows[0].Company_Name) \n    db.feedbackDetails.Name.default = str(rows[0].Name) \n    db.feedbackDetails.Contact_No.default = str(rows[0].Contact_No)\n    db.feedbackDetails.Item_ID.default = str(rows[0].Package_Tracking_ID)\n    form = SQLFORM(db.feedbackDetails).process()\n    form.vars.Company_Name = str(rows[0].Company_Name)\n    form.vars.Name = str(rows[0].Name)\n    form.vars.Contact_No = str(rows[0].Contact_No)\n    form.vars.Item_ID = str(rows[0].Package_Tracking_ID)\n\n    if form.accepted:\n            response.flash = \'Feedback submitted successfully\'\n    return {\'form\' : form}\n\nresponse._vars=response._caller(feedback)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/sonam/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/sonam/web2py/applications/IIITCourierportal/controllers/feedback.py", line 37, in <module>\n  File "/home/sonam/web2py/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/sonam/web2py/applications/IIITCourierportal/controllers/feedback.py", line 9, in feedback\n    form = SQLFORM.factory(Field(\'Company\', requires=IS_IN_SET(companyNames[:][\'Company_Name\']),default=companyNames[0])).process()\n  File "/home/sonam/web2py/gluon/packages/dal/pydal/objects.py", line 2507, in __getitem__\n    row = self.records[i]\nTypeError: list indices must be integers, not str\n'
+p11
+s.

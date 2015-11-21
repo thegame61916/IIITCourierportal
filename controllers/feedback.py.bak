@@ -1,0 +1,38 @@
+def feedback():
+    if auth.has_membership(group_id='student'):
+        query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'YES')
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False,links=[lambda row: A("Feedback",_href=URL("feedback","studentViewFeedback/"+str(row.id)))]);
+        return {'form':rows}
+
+    else:
+        companyNames = []
+        companyNamesR = db(db.courierDetails).select(db.courierDetails.Company_Name,distinct=True)
+        for c in companyNamesR:
+            companyNames.append(c.Company_Name)
+        form = SQLFORM.factory(Field('Company', requires=IS_IN_SET(companyNames),default=companyNames[0])).process()
+        if form.accepted:
+                redirect(URL('securityViewFeedback', vars={'Company_Name':form.vars.Company_Name}))
+        return {'form':form}
+
+def securityViewFeedback():
+        Company_Name = request.vars.Company_Name
+        query = (db.feedbackDetails.Company_Name == Company_Name )
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False,editable=False);
+        return {'rows':rows}
+
+def studentViewFeedback():
+    data_id = request.args(0)
+    rows = db(db.courierDetails.id == data_id).select()
+    db.feedbackDetails.Company_Name.default = str(rows[0].Company_Name) 
+    db.feedbackDetails.Name.default = str(rows[0].Name) 
+    db.feedbackDetails.Contact_No.default = str(rows[0].Contact_No)
+    db.feedbackDetails.Item_ID.default = str(rows[0].Package_Tracking_ID)
+    form = SQLFORM(db.feedbackDetails).process()
+    form.vars.Company_Name = str(rows[0].Company_Name)
+    form.vars.Name = str(rows[0].Name)
+    form.vars.Contact_No = str(rows[0].Contact_No)
+    form.vars.Item_ID = str(rows[0].Package_Tracking_ID)
+
+    if form.accepted:
+            response.flash = 'Feedback submitted successfully'
+    return {'form' : form}

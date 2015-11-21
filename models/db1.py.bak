@@ -1,5 +1,5 @@
 # coding: utf8
-from gluon import DAL
+
 db.define_table('courierDetails', 
     Field('Name', 'string',requires=IS_NOT_EMPTY()), 
     Field('Hostel_Name','string',requires=IS_NOT_EMPTY()), 
@@ -11,11 +11,6 @@ db.define_table('courierDetails',
     Field('Received',requires=IS_IN_SET(['YES', 'NO']),default='NO'), 
     Field('Size', requires=IS_IN_SET(['SMALL', 'MEDIUM', 'LARGE']),default='SMALL'),
     Field('Date_received', 'datetime',readable=False,writable=False,default=request.now))
-    
-def fun(*args):
-    print args
-
-db.courierDetails._after_update.append(lambda s,f: fun(s,f))
     
 db.define_table('studentHostelDetails', 
     Field('Name', 'string',requires=IS_NOT_EMPTY()), 

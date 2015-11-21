@@ -1,0 +1,4 @@
+{{extend 'layout.html'}}
+<h2>Feedback Form
+</h2>
+<h3>{{=form}}</h3>
