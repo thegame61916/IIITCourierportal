@@ -17,17 +17,6 @@ def index():
         redirect(URL('securityHome', 'securityHome'))
      else:
         redirect(URL('studentHome', 'studentHome'))
-        
-def getEmailFromHostelDB():
-    import cgi
-    s = cgi.escape(str(request.vars))
-    query = (db.studentHostelDetails.Hostel_Name == request.vars['Hostel_Name']) & (db.studentHostelDetails.Name == request.vars['Name']) & (db.studentHostelDetails.Room_No == request.vars['Room_No'])
-    rows = db(query).select()
-    emailId = ''
-    for row in rows:
-        emailId = row.Email
-    t = 'mohit'
-    return "jQuery('#courierDetails_Email').val(%s);" % repr(str(emailId))
     
 def user():
     """
@@ -43,7 +32,7 @@ def user():
         @auth.requires_permission('read','table name',record_id)
     to decorate functions that need access control
     """
-    return dict(form=auth.login())
+    return dict(form=auth)
 
 
 def download():

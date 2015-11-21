@@ -1,3 +1,4 @@
+@auth.requires_login()
 def searchPage():
     name = request.vars['name']
     contact = request.vars['contact']
@@ -25,6 +26,7 @@ def searchPage():
     
     return {'rows':rows}
 
+@auth.requires_membership('security')
 def sendAcceptanceMail(): 
     sub = 'Courier has been collected by you [Tracking ID: ' + request.vars['Package_Tracking_ID'] + ']'
     msg = 'Hi ' + request.vars['Name'] + ', \n\nThis is a notificaiton mail.\nCourier with mentioned Tracking ID from ' + request.vars['Company_Name'] + ' has been collected by you.\n\nThanks. \nIIIT Security Staff.' 

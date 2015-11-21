@@ -1,3 +1,4 @@
+@auth.requires_login()
 def feedback():
     if auth.has_membership(group_id='student'):
         query = (db.courierDetails.Email == auth.user.email) & (db.courierDetails.Received == 'YES')
@@ -17,13 +18,15 @@ def feedback():
         if form.accepted:
                 redirect(URL('securityViewFeedback', vars={'Company_Name':form.vars.Company}))
         return {'form':form}
-
+        
+@auth.requires_membership('security')
 def securityViewFeedback():
         Company_Name = request.vars.Company_Name
         query = (db.feedbackDetails.Company_Name == Company_Name )
-        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=True,editable=True);
+        rows=SQLFORM.grid(query,searchable=False,details=False,deletable=False,create=False);
         return {'rows':rows}
-
+        
+@auth.requires_membership('student')
 def studentViewFeedback():
     data_id = request.args(0)
     rows = db(db.courierDetails.id == data_id).select()

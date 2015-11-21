@@ -1,3 +1,4 @@
+@auth.requires_login()
 def searchPage():
     name = request.vars['name']
     contact = request.vars['contact']
@@ -18,11 +19,14 @@ def searchPage():
     if auth.has_membership(group_id='student'):
         queries.append(db.courierDetails.Email == auth.user.email)
     query = reduce(lambda a,b:(a&b),queries)    
-       
-    rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
+    if auth.has_membership(group_id='student'):
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,editable=False,create=False,csv=False)
+    else:
+        rows=SQLFORM.grid(query = query,searchable=False,details=False,deletable=False,create=False,csv=False)
     
     return {'rows':rows}
 
+@auth.requires_login()
 def sendAcceptanceMail(): 
     sub = 'Courier has been collected by you [Tracking ID: ' + request.vars['Package_Tracking_ID'] + ']'
     msg = 'Hi ' + request.vars['Name'] + ', \n\nThis is a notificaiton mail.\nCourier with mentioned Tracking ID from ' + request.vars['Company_Name'] + ' has been collected by you.\n\nThanks. \nIIIT Security Staff.' 

@@ -23,7 +23,8 @@ def securityHome():
                   reply_to='iiitcourierportal@gmail.com',
                   message=msg)
     return locals()
-    
+
+@auth.requires_membership('security')  
 def getEmailFromHostelDB():
     query = (db.studentHostelDetails.Hostel_Name == request.vars['Hostel_Name']) & (db.studentHostelDetails.Name == request.vars['Name']) & (db.studentHostelDetails.Room_No == request.vars['Room_No'])
     rows = db(query).select()
