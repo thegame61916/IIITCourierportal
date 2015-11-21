@@ -1,3 +1,10 @@
 {{extend 'layout.html'}}
-<h1>This is the feedback/securityViewFeedback.html template</h1>
-{{=BEAUTIFY(response._vars)}}
+<h1 class='h1InPage'>Feedbacks Received</h1>
+{{=rows}}
+{{if 'edit' in request.args:}}
+    <script>
+    jQuery(document).ready(function(){
+            $('#feedbackDetails_Company_Name').attr('readonly', true);
+       });
+    </script>
+{{pass}}

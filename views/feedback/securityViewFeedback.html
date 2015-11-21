@@ -1,3 +1,16 @@
 {{extend 'layout.html'}}
-<h1 class='h1InPage'>Feedback</h1>
+<h1 class='h1InPage'>Feedbacks Received</h1>
 {{=rows}}
+{{if 'edit' in request.args:}}
+    <script>
+    jQuery(document).ready(function(){
+            $('#feedbackDetails_Company_Name').attr('readonly', true);
+            $('#feedbackDetails_Item_ID').attr('readonly', true);
+            $('#feedbackDetails_Name').attr('readonly', true);
+            $('#feedbackDetails_Contact_No').attr('readonly', true);
+            $('#feedbackDetails_Delively_On_Time').attr('readonly', true);
+            $('#feedbackDetails_Packaging_Quality').attr('readonly', true);
+            $('#feedbackDetails_Feedback').attr('readonly', true);
+     });
+    </script>
+{{pass}}
