@@ -203,7 +203,7 @@ div.error { background-color: red; color: white; padding: 3px; }
    <!-- end sidebar -->
   </div>
   <!-- end page -->
-  <div class="footer">
+  <div id="footer">
    <p id="legal">
     &copy;2007 IIIT. All Rights Reserved. | Designed by Mohit Sharma and Sonam Gupta
    </p>
